@@ -1,0 +1,22 @@
+.footer {
+  width: 100%;
+  height: auto;
+  padding: 25px 10px;
+  color: #fff;
+  background-color: rgb(255, 220, 42);
+}
+
+.footer-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Cabin", serif;
+  font-size: 18px;
+  text-shadow: 0.5px 0.5px 5px rgba(1, 1, 1, 0.5);
+}
+
+.footer-grid:nth-child(2) {
+  margin-top: 15px;
+  font-family: "Lemon", cursive;
+}

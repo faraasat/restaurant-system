@@ -1,0 +1,203 @@
+.wave-top {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.wave-top svg,
+.wave-bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 149px;
+}
+
+.wave-bottom svg {
+  transform: rotateY(180deg);
+}
+
+.wave-top .shape-fill,
+.wave-bottom .shape-fill {
+  fill: #44affc;
+}
+
+.wave-bottom {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.cards-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #44affc;
+  border: 3px solid #44affc;
+  text-decoration: none;
+  font-family: Lemon, cursive;
+  font-weight: 400;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 25px !important;
+  margin-bottom: 5px !important;
+  transition: all 0.35s ease-in-out;
+}
+
+.cards-button:hover {
+  background-color: rgba(68, 175, 252, 0.2);
+  transform: scale(1.02);
+}
+
+.cards-card {
+  cursor: pointer;
+  box-shadow: 1.5px 1.5px 6px rgba(1, 1, 1, 0.5) !important;
+  transition: all 0.4s ease-in-out;
+}
+
+.cards-card:hover {
+  transition: all 0.4s ease-in-out;
+  transform: scale(1.02);
+  box-shadow: 1.7px 1.7px 8px rgba(1, 1, 1, 0.5) !important;
+}
+
+.home-video {
+  height: 450px;
+  width: 100%;
+}
+
+.home-video__bg {
+  background-image: linear-gradient(
+      70deg,
+      rgba(214, 155, 4, 0.4),
+      rgba(225, 243, 19, 0.4)
+    ),
+    url(./static/img/bg2.jpg);
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-origin: border-box;
+  background-size: cover;
+}
+
+.home-video__container {
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.home-video h2 {
+  font-family: "Lemon", cursive;
+  text-shadow: 1px 1px rgba(1, 1, 1, 1);
+}
+
+.home-video h4 {
+  margin-top: 15px;
+  font-family: "Cabin", cursive;
+  text-shadow: 1px 1px rgba(1, 1, 1, 1);
+  font-size: 18px;
+}
+
+.home-video__icon {
+  margin-top: 25px;
+  cursor: pointer;
+  width: 100px !important;
+  height: 100px !important;
+  animation: beat 1s infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes beat {
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.home-show {
+  width: 100%;
+  height: 720px;
+  position: relative;
+}
+
+.home-show__grid {
+  height: 100%;
+  width: 100%;
+}
+
+.home-show__grid-items {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-show__svg-bottom {
+  z-index: 10;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.home-show__svg-bottom svg {
+  z-index: 10;
+  position: relative;
+  display: block;
+  width: calc(187% + 1.3px);
+  height: 169px;
+  transform: rotateY(180deg);
+}
+
+.home-show__svg-bottom .shape-fill,
+.home-show__svg-top .shape-fill {
+  fill: #44affc;
+}
+
+.home-show__svg-top {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.home-show__svg-top svg {
+  z-index: 10;
+  position: relative;
+  display: block;
+  width: calc(211% + 1.3px);
+  height: 303px;
+  transform: rotateY(180deg);
+}
+
+.home-show__card {
+  position: relative;
+  z-index: 50;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 1.5px 1.5px 7px rgba(1, 1, 1, 0.5) !important;
+}
+
+.hr-style {
+  width: 100%;
+  margin: 10px 0 5px 0;
+  border-top: 1px solid #44affc;
+}

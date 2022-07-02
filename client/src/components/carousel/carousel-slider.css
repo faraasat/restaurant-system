@@ -1,0 +1,124 @@
+.carousel-slider {
+  min-height: 652px;
+  height: calc(100vh - 70px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.carousel-item {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-item__bg {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+      70deg,
+      rgba(214, 155, 4, 0.6),
+      rgba(225, 243, 19, 0.6)
+    ),
+    url(./../../static/img/bg.jpg);
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-item__align {
+  height: 100%;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 0 80px;
+}
+
+.carousel-item__txt {
+  margin-right: 8%;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-item__img {
+  flex-grow: 1;
+  width: 40%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-item__img img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel-item__txt--name-bg {
+  width: 380px;
+  height: 90px;
+  background-color: rgba(183, 201, 112, 0.8);
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  transform: rotate(-20deg);
+}
+
+.carousel-item__txt--name {
+  transform: translate(0%, -110%);
+}
+
+.carousel-item__txt--name h1 {
+  color: #fff;
+  transform: rotate(-20deg);
+  font-family: "Lemon", cursive;
+  font-size: 65px;
+}
+
+.carousel-item__txt--desc {
+  margin-top: -15px;
+  color: #fff;
+  width: 310px;
+  transform: translateX(8%);
+  text-align: justify;
+  font-family: "Cabin", sans-serif;
+  font-size: 18px;
+}
+
+.carousel-item__txt--btn {
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background-color: #fcde44;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  font-family: "Cabin", sans-serif;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
+.carousel-item__txt--btn:hover {
+  background-color: #fcdd44a8;
+  transform: scale(1.05);
+}
+
+.carousel-item__txt--btn svg {
+  font-size: 30px;
+}

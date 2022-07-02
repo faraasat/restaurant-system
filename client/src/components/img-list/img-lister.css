@@ -1,0 +1,20 @@
+.img-lister {
+  width: 100%;
+  height: auto;
+}
+
+.img-lister__container {
+  width: 100%;
+  padding: 30px 0;
+}
+
+.img-lister__item {
+  cursor: pointer;
+  transition: all 0.7s ease-in-out !important;
+}
+
+.img-lister__item:hover {
+  transition: all 0.7s ease-in-out !important;
+  transform: scale(1.02) !important;
+  z-index: 200;
+}
