@@ -56,6 +56,7 @@ const ImgLister = () => {
                 {...srcset(item.img, 250, 200, rows, cols)}
                 alt={item.title}
                 loading="lazy"
+                unselectable="on"
               />
               <ImageListItemBar
                 sx={{
@@ -64,6 +65,7 @@ const ImgLister = () => {
                     "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
                 }}
                 title={item.title}
+                subtitle={item.author}
                 position="top"
                 actionIcon={
                   <IconButton
@@ -163,12 +165,6 @@ const itemData = [
     author: "@shelleypauls",
   },
   {
-    img: MatkaBiryani,
-    title: "Matka Biryani",
-    author: "@peterlaster",
-    featured: true,
-  },
-  {
     img: Karahi,
     title: "Karahi",
     author: "@southside_customs",
@@ -177,6 +173,12 @@ const itemData = [
     img: KebabPlate,
     title: "Kebab Plate",
     author: "@helloimnik",
+  },
+  {
+    img: MatkaBiryani,
+    title: "Matka Biryani",
+    author: "@peterlaster",
+    featured: true,
   },
   {
     img: IraniKebab,
@@ -188,11 +190,6 @@ const itemData = [
     title: "Strawberry Cake",
     author: "@helloimnik",
   },
-  // {
-  //   img: Paratha,
-  //   title: "Paratha",
-  //   author: "@hjrc33",
-  // },
 ];
 
 export default ImgLister;

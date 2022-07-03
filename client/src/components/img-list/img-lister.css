@@ -13,8 +13,6 @@
   transition: all 0.7s ease-in-out !important;
 }
 
-.img-lister__item:hover {
-  transition: all 0.7s ease-in-out !important;
-  transform: scale(1.02) !important;
-  z-index: 200;
+.img-lister__container {
+  user-select: none !important;
 }
