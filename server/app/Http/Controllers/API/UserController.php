@@ -23,13 +23,16 @@ class UserController extends Controller
     public function signup(Request $request)
     {
         try {
+            $random = Str::random(40);
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->role = "client";
             $user->password = Hash::make($request->password);
+            $user->api_token = Hash::make($random);
             $user->save();
-            return self::returnResponse('account created', ["email" => $request->email, "id" => $request->id, "name" => $request->name, "role" => $user->role], 301);
+            $data = User::where("email", $request->email)->get();
+            return self::returnResponse('account created', ["email" => $request->email, "id" => $data[0]->id, "name" => $request->name, "role" => $user->role, "token" => $random], 201);
         } catch (\Throwable $th) {
             return self::returnError($th->errorInfo[2], "Bad Gateway", 502);
         }
@@ -48,20 +51,20 @@ class UserController extends Controller
                 return self::returnError("Check Email Or Password", "UnAuthorized", 401);
             }
             User::where("email", $request->email)->update(['api_token' => $random]);
-            return self::returnResponse('Login Successful', ["email" => $data[0]->email, "id" => $request->id, "name" => $data[0]->name, "role" => $data[0]->role, "token" => $random], 200);
+            return self::returnResponse('Login Successful', ["email" => $data[0]->email, "id" => $data[0]->id, "name" => $data[0]->name, "role" => $data[0]->role, "token" => $random], 200);
         } catch (\Throwable $th) {
             return  self::returnError($th->errorInfo[2], "Bad Gateway", 502);
         }
     }
 
-    public function logout(Request $request)
+    public function logout($email)
     {
         try {
-            $data = User::where("email", $request->email)->get();
+            $data = User::where("email", $email)->get();
             if (count($data) < 1) {
                 return self::returnError("User not Found", "Not Found", 404);
             }
-            User::where("email", $request->email)->update(['api_token' => null]);
+            User::where("email", $email)->update(['api_token' => null]);
             return self::returnResponse('Logout Successful', null, 200);
         } catch (\Throwable $th) {
             return  self::returnError($th->errorInfo[2], "Bad Gateway", 502);

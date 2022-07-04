@@ -3,55 +3,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  data: { name: null, email: null, id: null, role: null, token: null },
+  data: [],
   loading: false,
   errorStatus: false,
   error: null,
-  signedIn: false,
 };
 
-export const loginAsync = createAsyncThunk(
-  "user/loginAsync",
-  async (creds, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/login",
-        creds
-      );
-      if (!response.data || response.response) {
-        return rejectWithValue(response);
-      }
-      return response;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  }
-);
-
-export const signupAsync = createAsyncThunk(
-  "user/signupAsync",
-  async (creds, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/signup",
-        creds
-      );
-      if (!response.data || response.response) {
-        return rejectWithValue(response);
-      }
-      return response;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  }
-);
-
-export const logoutAsync = createAsyncThunk(
-  "user/logoutAsync",
-  async (creds, { rejectWithValue }) => {
+export const fetchProduct = createAsyncThunk(
+  "prod/fetchProduct",
+  async (creds = {}, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/logout/${creds.email}`
+        "http://localhost:8000/api/products",
+        creds
       );
       if (!response.data || response.response) {
         return rejectWithValue(response);
@@ -63,8 +27,44 @@ export const logoutAsync = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
-  name: "user",
+export const deleteProdcut = createAsyncThunk(
+  "prod/deleteProdcut",
+  async (creds, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/api/product/${creds.id}`,
+        creds
+      );
+      if (!response.data || response.response) {
+        return rejectWithValue(response);
+      }
+      return response;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const addProduct = createAsyncThunk(
+  "prod/loginAsync",
+  async (creds, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/product",
+        creds
+      );
+      if (!response.data || response.response) {
+        return rejectWithValue(response);
+      }
+      return response;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const productSlice = createSlice({
+  name: "prod",
   initialState,
   reducers: {
     resetError: (state) => {
@@ -73,83 +73,70 @@ export const userSlice = createSlice({
       state.error = initialState.error;
       state.errorStatus = initialState.errorStatus;
     },
-    setData: (state) => {
-      const user = localStorage.getItem("user");
-      if (user) {
-        state.data = JSON.parse(user);
-        state.signedIn = true;
-      }
-    },
   },
   extraReducers: {
-    [loginAsync.pending]: (state) => {
+    [fetchProduct.pending]: (state) => {
       state.loading = true;
       state.data = initialState.data;
       state.errorStatus = false;
       state.error = null;
-      state.signedIn = false;
     },
-    [loginAsync.fulfilled]: (state, { payload }) => {
+    [fetchProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.data = payload.data.result;
       state.errorStatus = false;
       state.error = null;
-      state.signedIn = true;
     },
-    [loginAsync.rejected]: (state, { payload }) => {
+    [fetchProduct.rejected]: (state, { payload }) => {
       state.loading = false;
       state.data = initialState.data;
       state.errorStatus = true;
       state.error = payload.response.data.message;
-      state.signedIn = false;
       setTimeout(function () {
         state.error = initialState.error;
         state.errorStatus = initialState.errorStatus;
       }, 7000);
     },
-    [signupAsync.pending]: (state) => {
+    [deleteProdcut.pending]: (state) => {
       state.loading = true;
       state.data = initialState.data;
       state.errorStatus = false;
       state.error = null;
-      state.signedIn = false;
     },
-    [signupAsync.fulfilled]: (state, { payload }) => {
+    [deleteProdcut.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.data = payload.data.result;
       state.errorStatus = false;
       state.error = null;
-      state.signedIn = true;
     },
-    [signupAsync.rejected]: (state, { payload }) => {
+    [deleteProdcut.rejected]: (state, { payload }) => {
       state.loading = false;
       state.data = initialState.data;
       state.errorStatus = true;
       state.error = payload.response.data.message;
-      state.signedIn = false;
-      setTimeout(function () {
+      setTimeout(async function () {
         state.error = initialState.error;
         state.errorStatus = initialState.errorStatus;
       }, 7000);
     },
-    [logoutAsync.pending]: (state) => {
+    [addProduct.pending]: (state) => {
       state.loading = true;
-      state.errorStatus = false;
-      state.error = null;
-    },
-    [logoutAsync.fulfilled]: (state) => {
-      state.loading = false;
-      localStorage.removeItem("user");
       state.data = initialState.data;
       state.errorStatus = false;
       state.error = null;
-      state.signedIn = false;
     },
-    [logoutAsync.rejected]: (state, { payload }) => {
+    [addProduct.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      state.data = payload.data.result;
+      state.errorStatus = false;
+      state.error = null;
+    },
+    [addProduct.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.data = initialState.data;
       state.errorStatus = true;
       state.error = payload.response.data.message;
-      setTimeout(function () {
+      setTimeout(async function () {
         state.error = initialState.error;
         state.errorStatus = initialState.errorStatus;
       }, 7000);
@@ -157,6 +144,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { resetError, setData } = userSlice.actions;
+export const { resetError } = productSlice.actions;
 
-export default userSlice.reducer;
+export default productSlice.reducer;

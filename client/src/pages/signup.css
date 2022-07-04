@@ -1,5 +1,5 @@
 .signup {
-  min-height: calc(100vh - 294px);
+  min-height: calc(100vh - 204px);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -7,9 +7,13 @@
   position: relative;
 }
 
+.signup form {
+  margin-bottom: 50px;
+}
+
 .signup h1 {
   color: rgb(68, 175, 252);
-  margin: 20px 0 40px 0;
+  margin: 70px 0 40px 0;
 }
 
 .signup table tr td:nth-child(1) label {
@@ -26,7 +30,7 @@
 }
 
 .signup-check {
-    transform: translateY(6px);
+  transform: translateY(6px);
 }
 
 .signup-check label {

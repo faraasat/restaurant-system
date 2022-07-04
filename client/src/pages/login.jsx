@@ -12,7 +12,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loginAsync } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
+import { loginAsync, resetError } from "../redux/userSlice";
 
 import "./login.css";
 
@@ -21,16 +22,20 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const loginUser = (e) => {
+  const loginUser = async (e) => {
     e.preventDefault();
-    dispatch(loginAsync({ email, password }));
-    setEmail("");
-    setPassword("");
+    const resp = await dispatch(loginAsync({ email, password }));
+    if (!resp.error && resp.payload.data) {
+      localStorage.removeItem("user");
+      localStorage.setItem("user", JSON.stringify(resp.payload.data.result));
+      navigate("/");
+    }
   };
 
-  function TransitionLeft(props) {
-    return <Slide {...props} direction="left" />;
+  function TransitionRight(props) {
+    return <Slide {...props} direction="right" />;
   }
 
   return (
@@ -97,12 +102,18 @@ const Login = () => {
       )}
       <Snackbar
         open={errorStatus}
-        autoHideDuration={6000}
-        onClose={() => errorStatus}
-        TransitionComponent={TransitionLeft}
+        autoHideDuration={2000}
+        onClose={() => dispatch(resetError())}
+        TransitionComponent={TransitionRight}
         key={error}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        style={{ transform: "translateY(60px)" }}
       >
-        <Alert onClose={() => errorStatus} severity="error" sx={{ width: "100%" }}>
+        <Alert
+          onClose={() => dispatch(resetError())}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
           {error}
         </Alert>
       </Snackbar>

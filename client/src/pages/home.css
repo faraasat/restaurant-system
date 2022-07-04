@@ -79,7 +79,7 @@
       rgba(214, 155, 4, 0.4),
       rgba(225, 243, 19, 0.4)
     ),
-    url(./static/img/bg2.jpg);
+    url(../static/img/bg2.jpg);
   width: 100%;
   height: 100%;
   background-position: center center;

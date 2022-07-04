@@ -53,7 +53,7 @@ class CheckoutController extends Controller
                 $checkout->transactionId = $product["transactionId"];
                 $checkout->save();
             }
-            return self::returnResponse('product Added', null, 301);
+            return self::returnResponse('product Added', null, 201);
         } catch (\Throwable $th) {
             return self::returnError($th, "Bad Gateway", 502);
         }

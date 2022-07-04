@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,20 +13,40 @@ import MenuItem from "@mui/material/MenuItem";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
-import { Divider } from "@mui/material";
+import { Alert, Divider, Slide, Snackbar } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logoutAsync, resetError } from "../../redux/userSlice";
 
 const Navbar = () => {
-  const auth = { login: false, admin: true };
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { data, signedIn, error, errorStatus } = useSelector(
+    (state) => state.user
+  );
   const pages = [
     ["Home", "/"],
     ["Gallery", "/gallery"],
     ["About", "/about"],
     ["Products", "/products"],
-    ["cart", "/cart"],
-    auth.login && ["cart", "/cart"],
+    signedIn && ["cart", "/cart"],
   ];
+
+  function handleAdminPanel() {
+    navigate("admin-panel");
+  }
+
+  function TransitionRight(props) {
+    return <Slide {...props} direction="right" />;
+  }
+
+  const handleLogout = () => {
+    dispatch(logoutAsync({ email: data.email }));
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -49,7 +68,6 @@ const Navbar = () => {
     <AppBar position="static" style={{ backgroundColor: "#ffdc2a" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
           <Link style={{ textDecoration: "none" }} to={`/`}>
             <Typography
               variant="h6"
@@ -150,79 +168,101 @@ const Navbar = () => {
           </Box> */}
 
           <Box sx={{ flexGrow: 0 }}>
-            {auth.login ? (
-              <>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src={AccountCircleIcon} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Profile</Typography>
-                  </MenuItem>
-                  <Divider />
-                  {auth.admin && (
-                    <>
+            {signedIn
+              ? [
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        alt={data?.name?.toUpperCase().toString()}
+                        src={AccountCircleIcon}
+                      />
+                    </IconButton>
+                  </Tooltip>,
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Profile</Typography>
+                    </MenuItem>
+                    <Divider />
+                    {data.role === "admin" && [
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">Admin Panel</Typography>
-                      </MenuItem>
-                      <Divider />
-                    </>
-                  )}
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">LogOut</Typography>
-                  </MenuItem>
-                </Menu>
-              </>
-            ) : (
-              <>
-                <Link
-                  style={{
-                    fontFamily: "Lemon",
-                    color: "#fff",
-                    textDecoration: "none",
-                  }}
-                  to={`/auth/login`}
-                >
-                  <Button style={{ fontFamily: "Lemon", color: "#fff" }}>
-                    LogIn
-                  </Button>
-                </Link>
-                <Link
-                  style={{
-                    fontFamily: "Lemon",
-                    color: "#fff",
-                    textDecoration: "none",
-                  }}
-                  to={`/auth/signup`}
-                >
-                  <Button style={{ fontFamily: "Lemon", color: "#fff" }}>
-                    SignUp
-                  </Button>
-                </Link>
-              </>
-            )}
+                        <Typography
+                          onClick={handleAdminPanel}
+                          textAlign="center"
+                        >
+                          Admin Panel
+                        </Typography>
+                      </MenuItem>,
+                      <Divider />,
+                    ]}
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography onClick={handleLogout} textAlign="center">
+                        Logout
+                      </Typography>
+                    </MenuItem>
+                  </Menu>,
+                ]
+              : [
+                  <Link
+                    style={{
+                      fontFamily: "Lemon",
+                      color: "#fff",
+                      textDecoration: "none",
+                    }}
+                    to={`/auth/login`}
+                  >
+                    <Button style={{ fontFamily: "Lemon", color: "#fff" }}>
+                      LogIn
+                    </Button>
+                  </Link>,
+                  <Link
+                    style={{
+                      fontFamily: "Lemon",
+                      color: "#fff",
+                      textDecoration: "none",
+                    }}
+                    to={`/auth/signup`}
+                  >
+                    <Button style={{ fontFamily: "Lemon", color: "#fff" }}>
+                      SignUp
+                    </Button>
+                  </Link>,
+                ]}
           </Box>
         </Toolbar>
       </Container>
+      <Snackbar
+        open={errorStatus}
+        autoHideDuration={2000}
+        onClose={() => dispatch(resetError())}
+        TransitionComponent={TransitionRight}
+        key={error}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        style={{ transform: "translateY(60px)" }}
+      >
+        <Alert
+          onClose={() => dispatch(resetError())}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
     </AppBar>
   );
-
 };
 export default Navbar;

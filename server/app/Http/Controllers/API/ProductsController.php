@@ -37,8 +37,8 @@ class ProductsController extends Controller
     public function create(Request $request)
     {
         try {
-            $res = self::auth($request->email, $request->token);
-            if ($res) return $res;
+            // $res = self::auth($request->email, $request->token);
+            // if ($res) return $res;
             $product = new Products();
             $pId =  Str::random(12);
             $product->productId = $pId;
@@ -50,7 +50,7 @@ class ProductsController extends Controller
             $product->weight = $request->weight;
             $product->imgUrl = $request->imgUrl;
             $product->save();
-            return self::returnResponse('product Added', ["productId" => $pId, "name" => $request->name, "desc" => $request->desc, "price" => $request->price, "shortDesc" => $request->shortDesc, "category" => $request->category, "weight" => $request->weight, "imgUrl" => $request->imgUrl], 301);
+            return self::returnResponse('product Added', ["productId" => $pId, "name" => $request->name, "desc" => $request->desc, "price" => $request->price, "shortDesc" => $request->shortDesc, "category" => $request->category, "weight" => $request->weight, "imgUrl" => $request->imgUrl], 201);
         } catch (\Throwable $th) {
             return self::returnError($th->errorInfo[2], "Bad Gateway", 502);
         }
@@ -74,7 +74,7 @@ class ProductsController extends Controller
                 "weight" => $request->weight,
                 "imgUrl" => $request->imgUrl,
             ]);
-            return self::returnResponse('product Added', ["productId" => $id, "name" => $request->name, "desc" => $request->desc, "price" => $request->price, "shortDesc" => $request->shortDesc, "category" => $request->category, "weight" => $request->weight, "imgUrl" => $request->imgUrl], 301);
+            return self::returnResponse('product Added', ["productId" => $id, "name" => $request->name, "desc" => $request->desc, "price" => $request->price, "shortDesc" => $request->shortDesc, "category" => $request->category, "weight" => $request->weight, "imgUrl" => $request->imgUrl], 201);
         } catch (\Throwable $th) {
             return self::returnError($th->errorInfo[2], "Bad Gateway", 502);
         }
@@ -119,8 +119,6 @@ class ProductsController extends Controller
     public function delete(Request $request, $id)
     {
         try {
-            $res = self::auth($request->email, $request->token);
-            if ($res) return $res;
             $f = Products::where("productId", $id)->get();
             if (count($f) < 1) {
                 return self::returnError("Product not Found", "Not Found", 404);
