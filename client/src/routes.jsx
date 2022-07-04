@@ -5,11 +5,12 @@ import NotFound from "./pages/404";
 import Gallery from "./pages/gallery";
 import Products from "./pages/products";
 import ProductsList from "./pages/products-list";
-import ProductDetails from "./pages/product-details";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
 import AdminPanel from "./pages/admin-panel";
+import Cart from "./pages/cart";
+import Profile from "./pages/profile";
 
 const CustomRoutes = () => {
   return (
@@ -19,10 +20,11 @@ const CustomRoutes = () => {
       <Route path="about" element={<About />} />
       <Route path="products" element={<Products />} />
       <Route path="products/:productType" element={<ProductsList />} />
-      <Route path="products/product/:productId" element={<ProductDetails />} />
+      <Route path="cart" element={<Cart />} />
       <Route path="auth/login" element={<Login />} />
       <Route path="auth/signup" element={<Signup />} />
       <Route path="admin-panel" element={<AdminPanel />} />
+      <Route path="profile" element={<Profile />} />
       <Route path="404" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

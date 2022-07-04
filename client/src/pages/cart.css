@@ -1,0 +1,85 @@
+.cart {
+  min-height: calc(100vh - 204px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Lemon", cursive;
+  position: relative;
+}
+
+.cart h1 {
+  color: rgb(68, 175, 252);
+  margin: 70px 0 40px 0;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cabin", serif;
+  color: rgb(255, 220, 42);
+  border: 2px solid rgb(255, 220, 42);
+  border-radius: 100%;
+  padding: 30px;
+  width: 200px;
+  height: 200px;
+}
+
+.empty-cart svg {
+  margin-top: 30px;
+  font-size: 80px;
+}
+
+.cart-present {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cart-check-btn {
+  margin-bottom: 40px;
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.cart-check-btn button {
+  margin-right: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  background-color: rgb(255, 220, 42);
+  padding: 10px 20px;
+  font-family: "Lemon", cursive;
+  border-radius: 5px;
+}
+
+.cart-add-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.cart-add-sub button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0px;
+  color: #fff;
+  background-color: rgb(68, 175, 252);
+}
+
+.cart-add-sub span {
+  display: inline-block;
+  margin: 0 5px;
+  transform: translateY(-5px);
+  height: 100%;
+}

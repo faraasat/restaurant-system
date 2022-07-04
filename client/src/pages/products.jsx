@@ -107,7 +107,7 @@ const itemData = [
   {
     img: StrawberryCake,
     title: "Desserts",
-    path: "dessert",
+    path: "desserts",
   },
   {
     img: Karahi,

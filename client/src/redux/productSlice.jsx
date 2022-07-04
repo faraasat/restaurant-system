@@ -46,11 +46,29 @@ export const deleteProdcut = createAsyncThunk(
 );
 
 export const addProduct = createAsyncThunk(
-  "prod/loginAsync",
+  "prod/addProduct",
   async (creds, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/product",
+        creds
+      );
+      if (!response.data || response.response) {
+        return rejectWithValue(response);
+      }
+      return response;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const fetchCategory = createAsyncThunk(
+  "prod/fetchCategory",
+  async (creds, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/product/category/${creds.category}`,
         creds
       );
       if (!response.data || response.response) {
@@ -132,6 +150,28 @@ export const productSlice = createSlice({
       state.error = null;
     },
     [addProduct.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.data = initialState.data;
+      state.errorStatus = true;
+      state.error = payload.response.data.message;
+      setTimeout(async function () {
+        state.error = initialState.error;
+        state.errorStatus = initialState.errorStatus;
+      }, 7000);
+    },
+    [fetchCategory.pending]: (state) => {
+      state.loading = true;
+      state.data = initialState.data;
+      state.errorStatus = false;
+      state.error = null;
+    },
+    [fetchCategory.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.data = payload.data.result;
+      state.errorStatus = false;
+      state.error = null;
+    },
+    [fetchCategory.rejected]: (state, { payload }) => {
       state.loading = false;
       state.data = initialState.data;
       state.errorStatus = true;

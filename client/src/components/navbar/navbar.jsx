@@ -195,7 +195,12 @@ const Navbar = () => {
                     onClose={handleCloseUserMenu}
                   >
                     <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Profile</Typography>
+                      <Typography
+                        onClick={() => navigate("/profile")}
+                        textAlign="center"
+                      >
+                        Profile
+                      </Typography>
                     </MenuItem>
                     <Divider />
                     {data.role === "admin" && [
