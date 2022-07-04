@@ -1,0 +1,76 @@
+.login {
+  min-height: calc(100vh - 204px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Lemon", cursive;
+  position: relative;
+}
+
+.login form {
+  margin-bottom: 50px;
+}
+
+.login h1 {
+  color: rgb(68, 175, 252);
+  margin: 70px 0 40px 0;
+}
+
+.login table tr td:nth-child(1) label {
+  color: rgb(68, 175, 252);
+  padding-right: 30px;
+}
+
+.login table tr {
+  padding-bottom: 10px;
+}
+
+.login-gap {
+  margin-bottom: 15px;
+}
+
+.login-check {
+  transform: translateY(6px);
+}
+
+.login-check label {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.login-check svg {
+  color: rgb(68, 175, 252);
+}
+
+.login-btn {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.login-btn button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  background-color: rgb(255, 220, 42);
+  padding: 10px 20px;
+  font-family: "Lemon", cursive;
+  border-radius: 5px;
+}
+
+/* .login-backdrop {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 204px);
+} */
+
+.backdrop {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
